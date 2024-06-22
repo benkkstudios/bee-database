@@ -1,30 +1,67 @@
+
+# Bee Database
+
+A SQlite database with small boilerplate
+
+
+## Create Item
+
+```kotlin
+data class TestItem(
+    override var id: String,
+    var url: String
+) : BeeModel
+
+```
+
+
+## Create Repository
+
+```kotlin
+class TestRepository(context: Context) : BeeTable<TestItem>(context) {
+    companion object {
+        private var repo: TestRepository? = null
+        fun getInstance(context: Context): TestRepository {
+            if (repo == null) repo = TestRepository(context)
+            return repo!!
+        }
+    }
+}
+```
+
+## Usage /Example
+
+```kotlin
+        private val repository: TestRepository by lazy { TestRepository.getInstance(this) }
         // to get all database as arraylist
-        database.get()
+        repository.get()
 
         // to get all database by id
-        database.get("id")
+        repository.get("id")
 
         // to get all database by id list
         val idList = listOf("1", "2", "3")
-        database.get(idList)
+        repository.get(idList)
 
         // insert item
         val insertItem = TestItem("1", "test")
-        database.insert(insertItem, ExistMode.REPLACE)
+        repository.insert(insertItem, ExistMode.REPLACE)
 
         // insert item by defined id
-        database.insert("100", insertItem, ExistMode.NOTHING)
+        repository.insert("100", insertItem, ExistMode.NOTHING)
 
         // insert item from list
         val listInsertItem = listOf(TestItem("1", "test"), TestItem("2", "test"))
-        database.insert(listInsertItem, ExistMode.NOTHING)
+        repository.insert(listInsertItem, ExistMode.NOTHING)
 
         // update item
         val updateItem = TestItem("1", "test")
-        database.update(updateItem)
+        repository.update(updateItem)
 
         // update item by id
-        database.update("item id", updateItem)
+        repository.update("item id", updateItem)
 
         // update with condition
-        database.updateWhere({ it.url == "asd" }, { updateItem })
+        repository.updateWhere({ it.url == "asd" }, { updateItem })
+```
+
