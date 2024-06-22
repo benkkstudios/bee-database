@@ -40,7 +40,7 @@ publishing {
     publications {
         release(MavenPublication) {
             groupId = 'com.github.benkkstudios'
-            artifactId = 'database'
+            artifactId = 'bee-database'
             version = '0.0.1'
 
             afterEvaluate {
