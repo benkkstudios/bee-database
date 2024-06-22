@@ -28,28 +28,21 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
-}
-
-publishing {
-    publications {
-        release(MavenPublication) {
-            groupId = 'com.github.benkkstudios'
-            artifactId = 'bee-database'
-            version = '0.0.1'
-
-            afterEvaluate {
-                from components.release
-            }
-        }
-    }
 }
 
 dependencies {
     implementation libs.gson
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.benkkstudios'
+                artifactId = 'bee-database'
+                version = '1.0'
+            }
+        }
+    }
 }
